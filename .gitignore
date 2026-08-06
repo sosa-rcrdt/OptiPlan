@@ -1,2 +1,6 @@
+# Archivos creados en compilación
+*.o
+*.exe
+
 # Carpeta de vscode
 .vscode/
