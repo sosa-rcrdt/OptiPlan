@@ -1,6 +1,15 @@
-# Archivos creados en compilación
+# Carpetas generadas durante la compilación
+bin/
+obj/
+
+# Archivos compilados
 *.o
+*.obj
 *.exe
 
-# Carpeta de vscode
+# Archivos temporales de Code::Blocks
+*.depend
+*.layout
+
+# Configuración local de Visual Studio Code
 .vscode/
