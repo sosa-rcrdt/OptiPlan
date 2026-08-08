@@ -67,7 +67,29 @@ int main()
     tasks.emplace_back(3, "Actualizar portafolio", 60, 1, 5);
 
     std::cout << appName << " v" << appVersion << "\n";
-    std::cout << "Planificador inteligente de tareas y horarios.\n";
+    std::cout << "Planificador inteligente de tareas y horarios.\n\n";
+
+    std::cout << "Tareas registradas:\n";
+
+    for (const Task& task : tasks)
+    {
+        std::cout << "ID: " << task.getId() << '\n';
+        std::cout << "Nombre: " << task.getName() << '\n';
+        std::cout << "Duracion estimada: " << task.getEstimatedDuration() << " minutos\n";
+        std::cout << "Prioridad: " << task.getPriority() << '\n';
+        std::cout << "Dia limite: " << task.getDeadlineDay() << '\n';
+
+        if (task.getStatus() == TaskStatus::Pending)
+        {
+            std::cout << "Estado: Pendiente\n";
+        }
+        else
+        {
+            std::cout << "Estado: Completada\n";
+        }
+
+        std::cout << "-----------------------------\n";
+    }
 
     return 0;
 }
