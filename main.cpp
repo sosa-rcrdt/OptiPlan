@@ -1,5 +1,6 @@
 #include <iostream>
 #include <string>
+#include <vector>
 
 enum class TaskStatus
 {
@@ -58,6 +59,12 @@ int main()
 {
     const std::string appName = "OptiPlan";
     const std::string appVersion = "0.0.1";
+
+    std::vector<Task> tasks;
+
+    tasks.emplace_back(1, "Estudiar C++", 90, 3, 3);
+    tasks.emplace_back(2, "Terminar practica de redes", 120, 2, 4);
+    tasks.emplace_back(3, "Actualizar portafolio", 60, 1, 5);
 
     std::cout << appName << " v" << appVersion << "\n";
     std::cout << "Planificador inteligente de tareas y horarios.\n";
