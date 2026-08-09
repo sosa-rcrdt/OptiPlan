@@ -55,6 +55,19 @@ public:
     }
 };
 
+const Task* findTaskById(const std::vector<Task>& tasks, int id)
+{
+    for (const Task& task: tasks)
+    {
+        if (task.getId() == id)
+        {
+            return &task;
+        }
+    }
+
+    return nullptr;
+}
+
 int main()
 {
     const std::string appName = "OptiPlan";
@@ -89,6 +102,27 @@ int main()
         }
 
         std::cout << "-----------------------------\n";
+    }
+
+    int searchedId;
+
+    std::cout << "\nIngresa el ID de la tarea que desees buscar: ";
+    std::cin >> searchedId;
+
+    const Task* foundTask = findTaskById(tasks, searchedId);
+
+    if (foundTask != nullptr)
+    {
+        std::cout << "\nTarea encontrada:\n";
+        std::cout << "ID: " << foundTask->getId() << '\n';
+        std::cout << "Nombre: " << foundTask->getName() << '\n';
+        std::cout << "Duracion estimada: " << foundTask->getEstimatedDuration() << " minutos\n";
+        std::cout << "Prioridad: " << foundTask->getPriority() << '\n';
+        std::cout << "Dia limite: " << foundTask->getDeadlineDay() << '\n';
+    }
+    else
+    {
+        std::cout << "\nNo existe una tarea con el ID " << searchedId << ".\n";
     }
 
     return 0;
