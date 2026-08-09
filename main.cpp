@@ -19,8 +19,19 @@ private:
     TaskStatus status_;
 
 public:
-    Task (int id, const std::string& name, int estimatedDuration, int priority, int deadlineDay)
-    : id_(id), name_(name), estimatedDuration_(estimatedDuration), priority_(priority), deadlineDay_(deadlineDay), status_(TaskStatus::Pending)
+    Task(
+        int id,
+        const std::string& name,
+        int estimatedDuration,
+        int priority,
+        int deadlineDay
+    )
+        : id_(id),
+          name_(name),
+          estimatedDuration_(estimatedDuration),
+          priority_(priority),
+          deadlineDay_(deadlineDay),
+          status_(TaskStatus::Pending)
     {
     }
 
@@ -53,11 +64,16 @@ public:
     {
         return status_;
     }
+
+    void markAsCompleted()
+    {
+        status_ = TaskStatus::Completed;
+    }
 };
 
-const Task* findTaskById(const std::vector<Task>& tasks, int id)
+Task* findTaskById(std::vector<Task>& tasks, int id)
 {
-    for (const Task& task: tasks)
+    for (Task& task : tasks)
     {
         if (task.getId() == id)
         {
@@ -79,7 +95,7 @@ int main()
     tasks.emplace_back(2, "Terminar practica de redes", 120, 2, 4);
     tasks.emplace_back(3, "Actualizar portafolio", 60, 1, 5);
 
-    std::cout << appName << " v" << appVersion << "\n";
+    std::cout << appName << " v" << appVersion << '\n';
     std::cout << "Planificador inteligente de tareas y horarios.\n\n";
 
     std::cout << "Tareas registradas:\n";
@@ -106,10 +122,10 @@ int main()
 
     int searchedId;
 
-    std::cout << "\nIngresa el ID de la tarea que desees buscar: ";
+    std::cout << "\nIngresa el ID de la tarea que deseas buscar: ";
     std::cin >> searchedId;
 
-    const Task* foundTask = findTaskById(tasks, searchedId);
+    Task* foundTask = findTaskById(tasks, searchedId);
 
     if (foundTask != nullptr)
     {
@@ -119,10 +135,22 @@ int main()
         std::cout << "Duracion estimada: " << foundTask->getEstimatedDuration() << " minutos\n";
         std::cout << "Prioridad: " << foundTask->getPriority() << '\n';
         std::cout << "Dia limite: " << foundTask->getDeadlineDay() << '\n';
+
+        char option;
+
+        std::cout << "\nDeseas marcar esta tarea como completada? (s/n): ";
+        std::cin >> option;
+
+        if (option == 's' || option == 'S')
+        {
+            foundTask->markAsCompleted();
+            std::cout << "La tarea ha sido marcada como completada.\n";
+        }
     }
     else
     {
-        std::cout << "\nNo existe una tarea con el ID " << searchedId << ".\n";
+        std::cout << "\nNo existe una tarea con el ID "
+                  << searchedId << ".\n";
     }
 
     return 0;
