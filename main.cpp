@@ -1,4 +1,5 @@
 #include <iostream>
+#include <stdexcept>
 #include <string>
 #include <vector>
 
@@ -19,7 +20,8 @@ private:
     TaskStatus status_;
 
 public:
-    Task(
+    Task
+    (
         int id,
         const std::string& name,
         int estimatedDuration,
@@ -33,6 +35,21 @@ public:
           deadlineDay_(deadlineDay),
           status_(TaskStatus::Pending)
     {
+        if (estimatedDuration_ <= 0)
+        {
+            throw std::invalid_argument
+            (
+                "La duracion estimada debe ser mayor que cero."
+            );
+        }
+
+        if (priority_ < 1 || priority_ > 3)
+        {
+            throw std::invalid_argument
+            (
+                "La prioridad debe estar entre 1 y 3."
+            );
+        }
     }
 
     int getId() const
@@ -91,9 +108,18 @@ int main()
 
     std::vector<Task> tasks;
 
-    tasks.emplace_back(1, "Estudiar C++", 90, 3, 3);
-    tasks.emplace_back(2, "Terminar practica de redes", 120, 2, 4);
-    tasks.emplace_back(3, "Actualizar portafolio", 60, 1, 5);
+    try
+    {
+        tasks.emplace_back(1, "Estudiar C++", 90, 3, 3);
+        tasks.emplace_back(2, "Terminar practica de redes", 120, 2, 4);
+        tasks.emplace_back(3, "Actualizar portafolio", 60, 1, 5);
+    }
+    catch (const std::invalid_argument& error)
+    {
+        std::cerr << "Error al crear una tarea: " << error.what() << '\n';
+
+        return 1;
+    }
 
     std::cout << appName << " v" << appVersion << '\n';
     std::cout << "Planificador inteligente de tareas y horarios.\n\n";
@@ -139,18 +165,19 @@ int main()
         char option;
 
         std::cout << "\nDeseas marcar esta tarea como completada? (s/n): ";
+
         std::cin >> option;
 
         if (option == 's' || option == 'S')
         {
             foundTask->markAsCompleted();
+
             std::cout << "La tarea ha sido marcada como completada.\n";
         }
     }
     else
     {
-        std::cout << "\nNo existe una tarea con el ID "
-                  << searchedId << ".\n";
+        std::cout << "\nNo existe una tarea con el ID " << searchedId << ".\n";
     }
 
     return 0;
